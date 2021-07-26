@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
+</head>
+</head>
+<body>
+    <h1>[ Arch4noobs ]</h1>
+    <p style="font-family: 'Balsamiq Sans', cursive;" class="rainbow" id="slogan">Easier than Manjaro!</p><br>
+    
+    <div id=intro>
+        <h2>Why not just use <span class="rainbow">the arch installation wiki?</span></h2>
+        <p>Well, to put it simply, THE OFFICIAL ARCH WIKI INSTALLATION GUIDE SUCKS! wait, let me rephrase that, THE OFFICIAL ARCH   WIKI INSTALLATION GUIDE SUCKS! <strong>for beginners</strong>. If you're a complete noob to Linux or even if you're a intermediate, you'd probably find the Arch wiki a bit too daunting to comprehend. No worries though! The actual installation is fairly easy and if you follow all the steps that I mention, you'd probably have a working machine in about 30 minutes or so.</p>
+        </div>
+    
+        <div class="card">
+            <h2 id="recommendations">recommendations</h2>
+            <ul>
+                <li>Installing on a Virtual Machine first before bare metal</li>
+                <li>A machine with at least 512MiB of RAM</li>
+                <li>A Hard drive with at least 2G of free space</li>
+            </ul>
+        </div>
+    
+        <div class="card">
+            <h2 id="prerequisites">Prerequisites</h2>
+                <ul>
+                    <li>A stable internet connection</li>
+                    <li>A host machine </li>
+                    <li>A bootable USB drive</li>
+                    <li>Some amount of consciousness</li>
+                </ul>
+        </div>
+    
+        <div class="card">
+            <h2 id="contents">Contents</h2>
+            <ol>
+                <li><a href="#downloading">Downloading the ISO</a></li>
+                <li><a href="#flashing">Flashing the ISO onto a USB</a></li>
+                <li><a href="#booting">Booting into the live environment</a></li>
+                <li><a href="#access">Accessing the system BIOS</a></li>
+                <li><a href="#configure">Configuring the system BIOS to be able to boot into Arch</a></li><br>
+                <li><a href="#live-environment">The Live Environement</a></li>
+                <ul>
+                    <li><a href="#verifying-boot">Verifying Boot Mode</a></li>
+                    <li><a href="#internet">Connect to the Internet</a></li>
+                    <li><a href="#system-clock">Update your System Clock</a></li>
+                    <li><a href="#partition">Partion the Disk</a></li>
+                    <li><a href="#format">Format the Disk</a></li>
+                    <li><a href="#mount">Mount the file systems</a></li><br>
+                </ul>
+                <li><a href="#installation">Installing the System</a></li>
+                <ul>
+                    <li><a href="#linux">Installing Linux</a></li>
+                    <li><a href="#software">Installing other required software</a></li><br>
+                </ul>
+                <li><a href="#configure">Configure the System</a></li>
+                <ul>
+                    <li><a href="#fstab">Fstab</a></li>
+                    <li><a href="#chroot">Chroot</a></li>
+                    <li><a href="#timezone">Time Zone</a></li>
+                    <li><a href="#localization">Localization</a></li>
+                    <li><a href="#network">Network Configuring</a></li>
+                    <li><a href="#password">Setting root password</a></li>
+                    <li><a href="#bootloader">Installing a Bootloader</a></li>
+                </ul><br>
+                <li><a href="#reboot">Reboot Into Arch</a></li>
+                <ul>
+                    <li><a href="#exit">Exiting out of Chroot</a></li>
+                    <li><a href="unmount">Unmouting all partitions</a></li>
+                    <li><a href="final-reboot">Reboot</a></li>
+                </ul>
+            </ol>
+        </div>
+    
+        <div id="downloading">
+            <h2>Downloading the ISO</h2>
+            <p>
+                You can acquire the Arch linux ISO file from the <a href="https://archlinux.org/download/">Arch Download Page</a> . I would recommend torrenting the file by the means of a torrent client, I personally use <a href="https://www.qbittorrent.org/">qBittorent</a>. Alternatively, you can get a direct download link as well. If you're going to do the latter, I'd suggest you'd verify the PGP signature before you follow through the next step.
+            </p>
+        </div>
+    
+        <div id="flashing">
+            <h2>Flashing the ISO onto a USB drive</h2>
+            <p>
+                The easiest way to flash any ISO onto a USB drive is by using the program <a href="https://www.balena.io/etcher/">Balena Etcher</a>. The flashing instructions are very straightforwad and I dont think it's worth a mention in this guide. Check out their website for more information.
+            </p>
+        </div>
+        <div id="booting">
+            <h2>Booting into the live environment</h2>
+            <ul>
+                <li id="access"><h3>Accessing the system BIOS</h3></li>
+                <p>
+                    Make sure you've plugged in the USB drive after you have finished flashing it. To access the system BIOS, you must first restart and when you get your device manufacturers splash screen, you must enter a specific keyboard combination. This combination varies across manufacturers. For example, in Dell computers, the combition is to press the <kbd>F2</kbd> key repeatedly until you're prompted with the BIOS screen. <br><br>
+                    <p>It may look something like this:</p>
+                    <img src="https://www.dell.com/community/image/serverpage/image-id/30479iEE97481F47FC9B29?v=v2" alt="A dell BIOS screen">
+                </p>
+                <li id="configure"><h3>Configuring  the system BIOS to be able to boot into Arch</h3></li>
+                <p>
+                    After you have access to the system BIOS, you have to change some settings first to be able to boot into the live environment. <br><br>
+                    
+                    <ol>
+                        <li><strong>Disable Secure Boot: </strong></li>
+                        <p>
+                            The Arch installation image does not support Secure Boot, if needed you can enable secure boot after the installation though it may lead to some unexpected errors.
+                        </p>
+                        <li>
+                            <strong>Choose your boot mode to Legacy </strong>
+                            <p>
+                                The installation for the legacy boot mode is a bit different than UEFI. Click the link if you want a <a href="#">tutorial on UEFI</a>
+                            </p>
+                        </li>
+                        <li>
+                            <strong>Change your Boot Sequence</strong>
+                            <p>
+                                Change your boot sequence such that the USB drive which contains the flashed ISO boots first instead of the Hard Drive.
+                            </p>
+                        </li>
+                        <li>
+                            <strong>Save all your changes and Reboot!</strong>
+                            <p>
+                                You will now be prompted into the Arch linux splashscreen. To access the live environment simply press enter on <code>Boot Arch Linux (x86_64)</code> 
+                            </p>
+                        </li>
+                    </ol>
+                </p>
+                
+    
+    
+    
+        
+            </ul>
+        </div>
+    
+        <div id="live-environment">
+            <h2>The Live Environement</h2>
+            <p>
+                Great! you're finnaly booted in the live environement and are now prompeted with this screen: <br><br> <img src="https://miloserdov.org/wp-content/uploads/2020/10/recover-arch-linux.png" alt="arch linux live environement"> <br><br> Wow.... spooky, now what? <br> well first, you have to verify the boot mode.
+                <ul>
+                <li id="verifying-boot">
+                    <h3>Verifying Boot Mode</h3>
+                    <p>As I mentioned before the steps of installation varies according to boot modes. To what boot mode you are in, run the command: <br><br>
+                    <pre><code>ls /sys/firmware/efi/efivars</code></pre><br>
+                    if the command return with no errors, you're in the UEFI boot mode. If no such directory exists, then you have booted into Legacy</p>
+                </li>
+                <li id="internet">
+                    <h3>Connect to the Internet</h3>
+                    <p>
+                        <ol>
+                        <li><p><strong>Ethernet</strong>: Just plug it in ez</p></li>
+                        <li><strong>WiFi</strong>: For WiFi it's a bit more complicated, but easy nevertheless. In this guide, we're gonna connect to the wireless network using the <code>iwctl</code> utility. <br> To start, type in:
+                        <code>iwctl</code> in the terminal. You have now entered the iwctl command prompt. To identify your device, type in:
+                        <pre><code>device list</code></pre> your device is probably listed as <code>wlan0</code>. <br> <br>
+                        Next, Scan for your available networks in your area: 
+                        <pre><code>station <em>yourdevicename</em> scan</code></pre><br> Next you can list the name of all available networks using the command:
+                        <pre><code>station <em>yourdevicename</em> get-networks</code></pre> After you find your desired network, you can connect to it by issuing the command:
+                        <pre><code>station <em>yourdevicename</em> connect <em>yournetworkname</em></code></pre> if it's being protected by a passphrase, enter the required password. And you're done! you've successfully connected to the internet, and once you have the internet, you can do anything! To check your connection just ping some random server or website
+                        <pre><code>ping -c 2 google.com</code></pre> if the process doesnt output an error, then you're golden!
+                        </li> 
+                        </ol>
+                        <li id="system-clock">
+                            <h3>Update your System Clock</h3>
+                        </li>
+                        <p>
+                            To update the system clock, run this command:
+                            <pre><code>timedatectl set-ntp true</code></pre>
+                            To the check the service status, use <code>timedatectl status</code>
+                        </p>
+                        <li id="partition">
+                            <h3>Partion the Disk</h3>
+                        </li>
+                        <p>
+                            Though the official Arch wiki reccomends to use <code>fdisk</code> to partition the hard drives, for the purposes of this guide we will be using <code>cfdisk</code> since it's much more beginner friendly and easier to use. To start cfdisk just type in <code>cfdisk</code> into the terminal. <br> <details><summary>You should be prompted into a GUI interface similar to this</summary><img src="/Images/dos or gpt.png" alt="dos or gpt"></details><br><strong>Note</strong>: Select the <strong>DOS</strong> option if you're on Legacy and <strong>GPT</strong> if you're running UEFI.
+                        </p>
+                        <p>
+                            if you didn't get the menu screen, it's ok. That means <code>cfdisk</code> has automatically scanned and discovered your BIOS type.
+                        </p> 
+                        <ol>
+                            <li><h4>Deleting existing partitions</h4></li>
+                            <p>
+                                Delete an already existing partion by navigation through the GUI and pressing <kbd>Enter</kbd> on Delete for the already existing partitions
+                            </p>
+                            <li><h4>Making a partion</h4></li>
+                            <p>
+                                For linux it's generaly advised to make 2 different partions, one is the linux file system and the other is linux swap file. The swap file exists so that when the RAM is overused, it offloads some of the work to the hard drive instead. Please refer to this image if you want to find out <a href="">how much swap space you need to allocate to your system</a><br><br>
+    
+                                <b>Making a root partition</b>: To make a root partition, press <kbd>Enter</kbd> on <code>New</code> and specify the amount of gigabytes you want to allocate to the partition. It should be the total space of yout hard disk minus the amount of swap space you want to create
+                                <details><summary>For example, I have a machine of 20G storage so I allocate 18G for the machine and 2G for the swap file</summary><img src="Images/sda1.png" alt="my partition"></details><br>
+                                Next, specify the partion type as primary and navigate to the menu to make it bootable (you will see a little asterik sign next to it) <br><br>
+                                <b>Making a Swap partiton</b>: To make a swap partion, give the remaining space left on the hard drive and make partition type primary <strong>Note: Do not make it bootable!</strong><br><br>
+                                After this, you have to change the swap file system, because by default it's written as Linux file system. <br><br>
+                                <details><summary>To change the file system, go to Type and press <kbd>Enter</kbd> on <code>82 Linux swap / Solaris</code></summary><img src="Images/changeswap.png" alt="changing type to swap"></details><br>
+                                All you have to do after this is to press Enter on <code>Write</code> and you're all done!
+                                <br>
+                                <strong>Note: The root partition is sda1 and the swap partition is sda2</strong>
+                            </p>
+                            
+                        </ol>
+    
+                        <li id="format"><h3>Format the Disk</h3></li>
+                        <p>
+                            After you've partionioned your drive, you have to format both of them with the appropriate file system. To format the root partition, run:
+                            <pre><code>mkfs.ext4 /dev/sda1</code></pre>
+                            To initialize the swap partition you have just created, run:
+                            <pre><code>mkswap /dev/sda2</code></pre>
+                        </p>
+                        <li id="mount"><h3>Mount the file systems</h3></li>
+                        <p>
+                            Mount sda1 to /mnt directory, run:
+                            <pre><code>mount /dev/sda1 /mnt</code></pre>
+                            Enable the swap partition you created with:
+                            <pre><code>swapon /dev/sda2</code></pre>
+                        </p>
+    
+                    </p>
+                </li>
+                </ul> 
+            </p>
+        </div>
+        <div id="installation">
+            <h2>Installing the System</h2>
+            <ul>
+            <li id="linux"><h3>Installing the Linux, and base packages</h3></li>
+            <p>
+                To install the base package, linux, and the firmware, run the <code>pacstrap</code> command:
+                <pre><code>pacstrap /mnt base linux linux-firmware</code></pre>
+            </p>
+            <li id="software"><h3>Installing other required software</h3></li>
+            <p>
+                Other software you'll need is <code>nano</code> and <code>NetworkManager</code> To install both, run:
+                <pre><code>pacman -S nano networkmanager</code></pre>
+    
+                To be able to connect to the internet using NetworkManager and use the GUI at next reboot, run:
+                <pre><code>systemctl enable NetworkManager</code></pre>
+            </p>
+            </ul>
+        </div>
+        <div id="configure">
+            <h2>Configure the System</h2>
+            <ul>
+               <li id="fstab"><h3>Fstab</h3></li>
+               <p>
+                   Generate an fstab file by running:
+                   <pre><code># genfstab -U /mnt >> /mnt/etc/fstab</code></pre>
+               </p> 
+               <li id="chroot"><h3>Chroot</h3></li>
+               <p>
+                    Change the root into the new system:
+                    <pre><code>arch-chroot /mnt</code></pre>
+               </p>
+               <li id="timezone"><h3>Time Zone</h3></li>
+               <p>
+                   To set the time zone of your country, run:
+                   <pre><code>ln -sf /usr/share/zoneinfo/<em>Region</em>/<em>City</em> /etc/localtime</code></pre>
+                   <details><summary>Example:</summary><img src="Images/Region.png" alt="Region"></details><br>
+                   Run <code>hwclock</code>:
+                   <pre><code>hwclock --systohc</code></pre>
+               </p>
+               <li id="localization"><h3>Localization</h3></li>
+               <p>
+                   <ol>
+                <li>Edit <code>/etc/locale.gen</code> and uncomment <code>en_US.UTF-8 UTF-8</code> and other needed locales. To do that, run:</li>
+                <pre><code>nano etc/locale.gen</code></pre> and remove the "#" form <code>en_US.UTF-8 UTF-8</code> and other locales. <br><br>
+                <details><summary>Example</summary><img src="Images/uncomment-locale.png" alt="uncomment locale"></details><br>
+                After that, generate the locales by runnng:
+                <pre><code>locale-gen</code></pre> <!--maybemissing tag chec-->   
+                <li>Create a <code>locale.conf</code> file and set the LANG variable accordingly:</li>
+                <p>
+                    <pre><code>nano /etc/locale.conf</code></pre>
+                    <details><summary>And type the following arguements:</summary><pre><code>LANG=en_US.UTF-8
+                    </code></pre><img src="Images/nano.png" alt="soon"></details>
+                </p>
+                </ol>
+               </p>
+               <li id="network"><h3>Network Configuring</h3></li>
+               <p>
+                   Create a hostname file and add your host name (it could be anything you want):
+                   <pre><code>nano /etc/hostname</code></pre>
+                   <details><summary>Write your preffered hostname. For example, here I will use the hostname <code>null</code></summary><img src="Images/hostname.png" alt=""></details> <br> 
+                   Then, you must edit the <code>/etc/hosts</code> file and add matching entries to it. run:
+                   <pre><code>nano /etc/hosts</code></pre>
+                   Add this line to the file with proper indentations:
+                   <pre><code>
+    127.0.0.1	localhost
+    ::1		localhost
+    127.0.1.1	<em>yourhostname</em>.localdomain  <em>yourhostname</em>
+                   </code></pre>
+                   <details><summary>Here is an example with the above entry <code>null</code></summary><img src="Images/hosts(5).png" alt="hosts"></details>
+               </p>
+               <li id="password"><h3>Root password</h3></li>
+               <p>
+                   You can change the root password of the system using the <code>passwd</code> command. In the next reboot, you can enter that to login as the root account. To set the root password, run:
+                   <pre><code>passwd</code></pre>
+                   And follow through the prompts.
+               </p>
+               <li id="bootloader">Installing a Bootloader</li>
+               <p>
+                   The bootloader we are going to be installing is grub. To install grub, runt the command:
+                   <pre><code>pacman -S grub</code></pre>
+                   Now that we have downloaded grub, we have to specify the drive it should be insalled too, so run:
+                   <pre><code>grub-install /dev/sda</code></pre>
+                   But we're not done yet! Just one more command to make the grub configuration file. To make the file, run:
+                   <pre><code>grub-mkconfig -o /boot/grub/grub.cfg</code></pre>
+               </p>
+            </ul>
+        </div>
+        <div id="reboot">
+            <h2>Reboot into Arch</h2>
+            <p>
+                 <ul>
+                     <li id="exit"><h3>Exit out of chroot</h3></li>
+                     <p>
+                         To exit out of chroot type <code>exit</code> on the terminal or press <kbd>Ctrl+d</kbd>
+                     </p>
+                     <li id="unmount"><h3>Unmount all partitions</h3></li>
+                     <p>
+                         To unmount all partitions, type in:
+                         <pre><code>umount -R /mnt</code></pre>
+                     </p>
+                     <li id="final-reboot"><h3>Reboot</h3></li>
+                     <p>
+                         Finnaly, reboot into your new arch system by typing in <code>reboot</code>, unpluging your USB device and changing your boot order to hard disk first.
+                     </p>
+                 </ul>
+            </p>
+        </div><br>
+        <h2>And that's it!! :D</h2>
+        <p>
+            You've finnaly installed Arch! Wasn't that hard was it? How does it feel being part of 0.5% of the market share? must feel good I bet! You can now gloat your superiority to all your imaginary friends in the typical Arch user fashion.
+        </p>
+        <hr>
+        <footer>
+            <b>Contact me:</b> null-arch@protonmail.com
+        </footer>
+
+</body>
+</html>
